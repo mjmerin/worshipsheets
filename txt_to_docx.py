@@ -32,7 +32,7 @@ def text_to_docx(text_content, output_filename, title=None):
     print(f"Document saved as: {output_filename}")
 
 
-def advanced_text_to_docx(text_content, output_filename, title=None, font_name='Arial', font_size=12, columns=2):
+def advanced_text_to_docx(text_content, output_filename, title=None, font_name='Arial', font_size=15, columns=2):
     """
     Convert text to .docx with formatting options including column layout
     
