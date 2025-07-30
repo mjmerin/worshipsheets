@@ -2,14 +2,11 @@ import requests
 import sys
 from bs4 import BeautifulSoup
 
-from queue import Queue
-
 # local libraries
 import lyrics_parser
 import txt_to_pdf
 import txt_to_docx
 
-text_queue = Queue(maxsize=0) 
 text_list = []
 
 # URL of the song lyrics page
