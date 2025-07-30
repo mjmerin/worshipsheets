@@ -5,3 +5,9 @@ Worship sheets is intended to create worship lyric sheets for bible studies by u
 ## Websites supported:
 
 [WorshipChords](https://worshipchords.com/)
+
+## Usage
+
+```
+python3 worshipsheets.py <URL>
+```
