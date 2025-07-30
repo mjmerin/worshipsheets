@@ -25,7 +25,6 @@ for arg in sys.argv[1:]:  # Slice the list to exclude sys.argv[0]
         print(f"Extracting lyrics from {url}.")
         text = content_div.get_text(separator='\n').strip()
         stripped_text = lyrics_parser.strip_chords_from_lyrics(text)
-        text_queue.put(stripped_text)
         text_list.append(stripped_text)
     else:
         print(f"Could not find lyrics section on page: {url}.")
