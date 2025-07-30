@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 
 # local libraries
 import lyrics_parser
-import txt_to_pdf
 import txt_to_docx
 
 text_list = []
