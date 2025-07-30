@@ -140,7 +140,7 @@ def is_section_title(text):
     Handles formats like: Verse, Verse1, Verse 1, Chorus, Chorus2, Bridge 3, etc.
     """
     # Pattern to match section titles with optional numbers and spacing
-    pattern = r'^(Verse|Chorus|Pre-Chorus|Pre\s+Chorus|Bridge|Vamp)\s*\d*\s*:*$'
+    pattern = r'^(Verse|Chorus|Refrain|Pre-Chorus|Pre\s+Chorus|Bridge|Vamp)\s*\d*\s*:*$'
     return bool(re.match(pattern, text.strip(), re.IGNORECASE))
 
 def setup_two_columns(section, column_spacing_inches=0.5):
