@@ -18,8 +18,9 @@ for arg in sys.argv[1:]:  # Slice the list to exclude sys.argv[0]
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
+    content_type = title_parser.get_content_type_from_url_extended(url)
     # Find the main content div where lyrics are located
-    content_div = soup.find('div', class_='song-chords-content') #worshipchords
+    content_div = soup.find('div', class_=content_type) 
 
     # Extract and clean the text
     if content_div:
