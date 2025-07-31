@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 # local libraries
 import lyrics_parser
-import title_parser
+import url_parser
 import txt_to_docx
 
 text_list = []
@@ -12,13 +12,13 @@ text_list = []
 # URL of the song lyrics page
 for arg in sys.argv[1:]:  # Slice the list to exclude sys.argv[0]
     url = arg
-    song_title = title_parser.extract_song_title_from_url(url)
+    song_title = url_parser.extract_song_title_from_url(url)
 
     # Send a GET request to the website
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    content_type = title_parser.get_content_type_from_url_extended(url)
+    content_type = url_parser.get_content_type_from_url_extended(url)
     # Find the main content div where lyrics are located
     content_div = soup.find('div', class_=content_type) 
 
