@@ -15,7 +15,7 @@ def strip_chords_and_breaks(lyrics_text):
     
     for line in lines:
         # Skip section headers (Intro, Verse 1, Chorus, etc.)
-        if line.strip() and (line.strip().startswith(('Intro', 'Verse', 'Chorus', 'Bridge', 'Outro')) 
+        if line.strip() and (line.strip().startswith(('Intro', 'Verse', 'Chorus', 'Pre-Chorus', 'Pre Chorus', 'Vamp', 'Refrain', 'Bridge', 'Outro')) 
                            or line.strip().replace(' ', '').replace('\t', '').isdigit()):
             clean_lines.append(line.strip())
             continue
@@ -79,7 +79,7 @@ def strip_chords_from_lyrics(lyrics_text):
             continue
         
         # Keep section headers
-        if line.startswith(('Intro', 'Verse', 'Chorus', 'Bridge', 'Outro')):
+        if line.startswith(('Intro', 'Verse', 'Chorus', 'Pre-Chorus', 'Pre Chorus', 'Vamp', 'Refrain', 'Bridge', 'Outro')):
             clean_lines.append(line)
             continue
         
@@ -94,7 +94,7 @@ def strip_chords_from_lyrics(lyrics_text):
             # If current line looks like chords and next line has lyrics
             if (re.match(chord_only_pattern, line) and next_line and 
                 not re.match(chord_only_pattern, next_line) and
-                not next_line.startswith(('Intro', 'Verse', 'Chorus', 'Bridge', 'Outro'))):
+                not next_line.startswith(('Intro', 'Verse', 'Chorus', 'Pre-Chorus', 'Pre Chorus', 'Vamp', 'Refrain', 'Bridge', 'Outro'))):
                 clean_lines.append(next_line)
                 skip_next = True
                 continue
