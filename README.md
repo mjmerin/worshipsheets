@@ -4,13 +4,19 @@
 
 `WorshipSheets` will strip out any chords and format sections such as Verse, Pre-Chorus and Chorus and output to a `.docx` file. 
 
+The inspiration behind the project is having to lead worship at [New Hope International Church](https://newhic.org/) on our Wednesday night discipleship classes and needing a simple way to create lyrics sheets. 
+
 ## Current Websites Supported:
 
 [WorshipChords](https://worshipchords.com/)
 
+[PNWChords](https://pnwchords.com)
+
 ## Current Functionality: 
 
-`WorshipSheets` currently only supports one website, [WorshipChords](https://worshipchords.com/). It is able to process the scraped lyrics and output to a double column `.docx` file but is currently NOT able to print out song title or song author. 
+`WorshipSheets` currently only supports two websites. Other websites may work but needs additional testing and most likely addtional logic. It is able to process the scraped lyrics and output to a double column `.docx` file but is currently NOT able to print out song author. 
+
+As each website shows the lyrics/tabs differently, formatting still needs to be customized per website. 
 
 ## Environment Setup
 
@@ -31,4 +37,18 @@ pip3 install python-docx
 
 ```
 python3 worshipsheets.py <URL>
+```
+
+### Examples
+
+#### Single Songs
+```
+python3 worshipsheets.py https://worshipchords.com/how-great-is-our-god-chords/
+
+python3 worshipsheets.py https://pnwchords.com/i-need-you-more-kim-walker/
+```
+
+#### Multi Songs
+```
+python3 worshipsheets.py https://worshipchords.com/how-great-is-our-god-chords/ https://pnwchords.com/i-need-you-more-kim-walker/
 ```
