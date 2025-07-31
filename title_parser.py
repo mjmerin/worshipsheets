@@ -32,3 +32,35 @@ def extract_song_title_from_url(url):
         
     except Exception as e:
         return f"Error processing URL: {e}"
+    
+def get_content_type_from_url_extended(url, default='unknown'):
+    """
+    Extended version with more flexibility and a default return value.
+    
+    Args:
+        url (str): The URL to analyze
+        default (str): Default value to return if no pattern matches
+        
+    Returns:
+        str: Content type identifier
+    """
+    # Convert to lowercase for case-insensitive matching
+    url_lower = url.lower()
+    
+    # Define URL pattern mappings with priority order
+    url_mappings = [
+        ('worshipchords', 'song-chords-content'),
+        ('pnwchords', 'tabcontent'),
+        ('ultimate-guitar', 'guitar-tabs'),
+        ('songsterr', 'interactive-tabs'),
+        ('chordify', 'chord-sheets'),
+        ('tabs', 'generic-tabs'),  # Generic fallback for any site with 'tabs'
+        ('chord', 'generic-chords'),  # Generic fallback for any site with 'chord'
+    ]
+    
+    # Check each pattern in order
+    for pattern, content_type in url_mappings:
+        if pattern in url_lower:
+            return content_type
+        
+    return default
