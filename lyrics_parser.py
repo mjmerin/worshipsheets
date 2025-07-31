@@ -110,3 +110,14 @@ def strip_chords_from_lyrics(lyrics_text):
     result = '\n'.join(clean_lines)
     result = re.sub(r'\n\s*\n\s*\n+', '\n\n', result)
     return result.strip()
+
+def append_title(lyrics, song_name):
+        lines = lyrics.strip().split('\n')
+        clean_lines = []
+        clean_lines.append(song_name)
+
+        for i, line in enumerate(lines):
+            clean_lines.append(line)
+
+        result = '\n'.join(clean_lines)
+        return result.strip()
