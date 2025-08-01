@@ -53,7 +53,7 @@ def create_two_column_docx(*texts, output_filename="multi_column_output.docx",
 
 def create_continuous_two_column_docx(*texts, output_filename="lyrics.docx", 
                                      font_name='Arial', font_size=12, column_spacing=0.5, 
-                                     separator_text="---"):
+                                     separator_text="\n"):
     """
     Create a two-column .docx file where all texts flow continuously with formatted titles.
     Also makes the first line of each text block bold and 10 points larger.
