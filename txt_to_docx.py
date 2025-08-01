@@ -93,14 +93,9 @@ def create_continuous_two_column_docx(*texts, output_filename="lyrics.docx",
             separator_run.font.name = font_name
             separator_run.font.size = Pt(font_size)
             separator_para.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
-            doc.add_paragraph()  # Add some space
         
         # Add the text content with formatting
         add_formatted_text_to_document(doc, text, font_name, font_size, format_first_line=True)
-        
-        # Add space after each text section
-        if i < len(texts) - 1:
-            doc.add_paragraph()
     
     doc.save(output_filename)
     print(f"Continuous two-column document with {len(texts)} text sections saved as: {output_filename}")
