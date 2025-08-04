@@ -63,7 +63,8 @@ def strip_chords_and_breaks(lyrics_text):
 
 def strip_chords_from_lyrics(lyrics_text):
     """
-    More sophisticated chord stripping that handles inline chords better
+    More sophisticated chord stripping that handles inline chords better,
+    including complex slash chords like A/C#m
     """
     lines = lyrics_text.strip().split('\n')
     clean_lines = []
@@ -83,8 +84,8 @@ def strip_chords_from_lyrics(lyrics_text):
             clean_lines.append(line)
             continue
         
-        # Check if this is a chord-only line
-        chord_only_pattern = r'^[A-G#/\d\s\-sus]+$'
+        # Enhanced chord-only pattern to include complex slash chords
+        chord_only_pattern = r'^[\*\s]*[A-G#b/\d\s\-susmajmindimaug\*]+[\*\s]*$'
         if re.match(chord_only_pattern, line):
             continue
         
@@ -100,8 +101,11 @@ def strip_chords_from_lyrics(lyrics_text):
                 continue
         
         # Process mixed chord/lyric lines
-        # Remove obvious chord symbols
-        cleaned = re.sub(r'\b[A-G][#b]?(?:maj|min|m|sus[24]?|add[0-9]|[0-9])*(?:/[A-G][#b]?)?\b', '', line)
+        # Enhanced regex to handle complex slash chords with bass notes that have modifiers
+        # Handles patterns like **A/C#m**, A/F#maj7, D/Bm, etc.
+        cleaned = re.sub(r'\*\*[A-G][#b]?(?:maj|min|m|sus[24]?|add[0-9]|dim|aug|[0-9])*(?:/[A-G][#b]?(?:maj|min|m|sus[24]?|add[0-9]|dim|aug|[0-9])*)??\*\*', '', line)  # Bold chords with slash notation
+        cleaned = re.sub(r'\b[A-G][#b]?(?:maj|min|m|sus[24]?|add[0-9]|dim|aug|[0-9])*(?:/[A-G][#b]?(?:maj|min|m|sus[24]?|add[0-9]|dim|aug|[0-9])*)??\b', '', cleaned)  # Regular chords with slash notation
+        cleaned = re.sub(r'\*+', '', cleaned)  # Remove any remaining asterisks
         cleaned = re.sub(r'\s+', ' ', cleaned).strip()
         
         if cleaned and len(cleaned) > 2:  # Only keep substantial content
