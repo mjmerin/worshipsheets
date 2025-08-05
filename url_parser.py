@@ -51,12 +51,7 @@ def get_content_type_from_url_extended(url, default='unknown'):
     url_mappings = [
         ('worshipchords', 'song-chords-content'),
         ('pnwchords', 'tabcontent'),
-        ('ultimate-guitar', 'guitar-tabs'),
-        ('songsterr', 'interactive-tabs'),
         ('essentialworship', 'page-wrap'),
-        ('chordify', 'chord-sheets'),
-        ('tabs', 'generic-tabs'),  # Generic fallback for any site with 'tabs'
-        ('chord', 'generic-chords'),  # Generic fallback for any site with 'chord'
     ]
     
     # Check each pattern in order
