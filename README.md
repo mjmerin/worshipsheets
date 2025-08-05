@@ -12,9 +12,11 @@ The inspiration behind the project is having to lead worship at [New Hope Intern
 
 [PNWChords](https://pnwchords.com)
 
+[EssentialWorship](https://essentialworship.com/)
+
 ## Current Functionality: 
 
-`WorshipSheets` currently only supports two websites. Other websites may work but needs additional testing and most likely addtional logic. It is able to process the scraped lyrics and output to a double column `.docx` file but is currently NOT able to print out song author. 
+`WorshipSheets` currently only supports three websites. Other websites may work but needs additional testing and most likely addtional logic. It is able to process the scraped lyrics and output to a double column `.docx` file but is currently NOT able to print out song author. 
 
 As each website shows the lyrics/tabs differently, formatting still needs to be customized per website. 
 
