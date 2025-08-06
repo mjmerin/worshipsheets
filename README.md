@@ -32,7 +32,7 @@ source .venv/bin/activate
 Then you will need to install the following packages
 
 ```
-pip3 install python-docx
+python3 -m pip install python-docx
 ```
 
 ## Usage
