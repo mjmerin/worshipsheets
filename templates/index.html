@@ -554,7 +554,7 @@
                 </div>
 
                 <button type="submit" class="submit-btn" id="submitBtn">
-                    Download Your Lyrics!
+                    Process Your Lyrics!
                 </button>
             </form>
 
@@ -639,7 +639,7 @@
                         message += `<br><br><strong>Processed songs:</strong><br>• ${data.processed_songs.join('<br>• ')}`;
                     }
                     
-                    const downloadHtml = `<a href="${data.download_url}" class="download-link" download>📥 Download Cleaned Lyrics</a>`;
+                    const downloadHtml = `<a href="${data.download_url}" class="download-link" download>📥 Download Lyrics</a>`;
                     showResult(message + '<br><br>' + downloadHtml, 'success');
                 } else {
                     showResult(`Error: ${data.detail}`, 'error');
