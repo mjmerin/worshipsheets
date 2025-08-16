@@ -17,10 +17,14 @@ for arg in sys.argv[1:]:  # Slice the list to exclude sys.argv[0]
     # Send a GET request to the website
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
-
     content_type = url_parser.get_content_type_from_url_extended(url)
-    # Find the main content div where lyrics are located
-    content_div = soup.find('div', class_=content_type) 
+
+    if "pnwchords" in url:
+        lyrics_header = soup.find('h2', class_='tabtitle', string='Lyrics')
+        if lyrics_header:
+            content_div = lyrics_header.find_next_sibling('div', class_='tabcontent')
+    else:
+        content_div = soup.find('div', class_=content_type) 
 
     # Extract and clean the text
     if content_div:

@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .lock-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            background: #fafafa;
+        }
+
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            margin-bottom: 20px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .main-app {
+            display: none;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+        }
+
+        .app-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .app-content {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 20px;
+                padding: 30px 25px;
+            }
+
+            .main-app {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="lock-icon">🔒</div>
+        <h1>Secure Access</h1>
+        <p class="subtitle">Enter your password to continue</p>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">Access Application</button>
+            
+            <div id="errorMessage" class="error-message">
+                Incorrect password. Please try again.
+            </div>
+        </form>
+    </div>
+
+    <!-- Main Application (Hidden by default) -->
+    <div id="mainApp" class="main-app">
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorshipSheets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .url-container {
+            position: relative;
+        }
+
+        .url-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .url-input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        .add-url-btn, .remove-url-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .add-url-btn {
+            background: #28a745;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .add-url-btn:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+
+        .remove-url-btn {
+            background: #dc3545;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .remove-url-btn:hover {
+            background: #c82333;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .result.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .result.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .download-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .download-link:hover {
+            background: #218838;
+        }
+
+        .formatting-options {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border: 1px solid #e9ecef;
+        }
+
+        .formatting-options h3 {
+            color: #495057;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .option-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .option-group label {
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .option-input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .option-input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 2px rgba(79, 172, 254, 0.1);
+        }
+
+        select.option-input {
+            cursor: pointer;
+        }
+
+        .toggle-options {
+            background: none;
+            border: none;
+            color: #4facfe;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: underline;
+            margin-top: 10px;
+        }
+
+        .toggle-options:hover {
+            color: #357abd;
+        }
+
+        .supported-sites h3 {
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .site-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .site-tag {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .supported-sites {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+            .container {
+                margin: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .main-content {
+                padding: 30px 20px;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎵 WorshipSheets</h1>
+            <p>Making Lyric Sheets Creation Easy!</p>
+        </div>
+
+        <div class="main-content">
+            <form id="lyricsForm">
+                <div class="form-group">
+                    <label>Song URLs (one per line):</label>
+                    <div id="urlInputs">
+                        <div class="url-container">
+                            <input type="url" class="url-input" name="urls" placeholder="https://worshipchords.com/amazing-grace-chords/" required>
+                        </div>
+                    </div>
+                    <button type="button" class="add-url-btn" onclick="addUrlInput()">+ Add Another URL</button>
+                </div>
+
+                <!-- Formatting Options -->
+                <div class="formatting-options" id="formattingOptions">
+                    <h3>🎨 Document Formatting Options</h3>
+                    <div class="options-grid">
+                        <div class="option-group">
+                            <label for="filename">File Name:</label>
+                            <input type="text" id="filename" name="filename" class="option-input" 
+                                   value="cleaned_lyrics" placeholder="cleaned_lyrics">
+                        </div>
+                        
+                        <div class="option-group">
+                            <label for="font_name">Font:</label>
+                            <select id="font_name" name="font_name" class="option-input">
+                                <option value="Arial" selected>Arial</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Calibri">Calibri</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Verdana">Verdana</option>
+                                <option value="Helvetica">Helvetica</option>
+                                <option value="Tahoma">Tahoma</option>
+                                <option value="Trebuchet MS">Trebuchet MS</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label for="font_size">Font Size (points):</label>
+                            <input type="number" id="font_size" name="font_size" class="option-input" 
+                                   value="12" min="8" max="72" step="1">
+                        </div>
+                        
+                        <div class="option-group">
+                            <label for="column_spacing">Column Spacing (inches):</label>
+                            <input type="number" id="column_spacing" name="column_spacing" class="option-input" 
+                                   value="0.5" min="0.1" max="2.0" step="0.1">
+                        </div>
+                    </div>
+                    <button type="button" class="toggle-options" onclick="toggleOptions()" id="toggleBtn">
+                        ▲ Hide Options
+                    </button>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Process Your Lyrics!
+                </button>
+            </form>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Processing your lyrics... This may take a moment.</p>
+            </div>
+
+            <div class="result" id="result"></div>
+
+            <div class="supported-sites">
+                <h3>📱 Supported Websites</h3>
+                <div class="site-list">
+                    <!-- <span class="site-tag">WorshipChords.com</span>
+                    <span class="site-tag">PNWChords.com</span>
+                    <span class="site-tag">EssentialWorship.com</span> -->
+                    <a href="https://worshipchords.com/" target="_blank" class="site-tag">WorshipChords</a>
+                    <a href="https://pnwchords.com/" target="_blank" class="site-tag">PNWChords</a>
+                    <a href="https://essentialworship.com/" target="_blank" class="site-tag">EssentialWorship</a>
+                </div>
+                <p style="margin-top: 15px; color: #6c757d; font-size: 14px;">
+                    Simply paste the URL of any song from the supported Christian music sites and we'll automatically remove all chord symbols, 
+                    leaving you with clean, formatted lyrics perfect for projection or printing. 
+                    Customize the font, size, and column spacing to match your needs.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let urlCount = 1;
+
+        function addUrlInput() {
+            if (urlCount >= 10) {
+                alert('Maximum 10 URLs allowed');
+                return;
+            }
+
+            const container = document.getElementById('urlInputs');
+            const div = document.createElement('div');
+            div.className = 'url-container';
+            div.innerHTML = `
+                <input type="url" class="url-input" name="urls" placeholder="https://worshipchords.com/song-title-chords/">
+                <button type="button" class="remove-url-btn" onclick="removeUrlInput(this)">Remove</button>
+            `;
+            container.appendChild(div);
+            urlCount++;
+        }
+
+        function removeUrlInput(btn) {
+            btn.parentElement.remove();
+            urlCount--;
+        }
+
+        document.getElementById('lyricsForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const urls = formData.getAll('urls').filter(url => url.trim() !== '');
+            
+            if (urls.length === 0) {
+                showResult('Please enter at least one URL', 'error');
+                return;
+            }
+
+            // Show loading state
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('submitBtn').disabled = true;
+
+            try {
+                const response = await fetch('/scrape', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    let message = data.message;
+                    if (data.processed_songs && data.processed_songs.length > 0) {
+                        message += `<br><br><strong>Processed songs:</strong><br>• ${data.processed_songs.join('<br>• ')}`;
+                    }
+                    
+                    const downloadHtml = `<a href="${data.download_url}" class="download-link" download>📥 Download Lyrics</a>`;
+                    showResult(message + '<br><br>' + downloadHtml, 'success');
+                } else {
+                    showResult(`Error: ${data.detail}`, 'error');
+                }
+            } catch (error) {
+                showResult(`Network error: ${error.message}`, 'error');
+            } finally {
+                // Hide loading state
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('submitBtn').disabled = false;
+            }
+        });
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = message;
+            resultDiv.className = `result ${type}`;
+            resultDiv.style.display = 'block';
+        }
+
+        function toggleOptions() {
+            const options = document.getElementById('formattingOptions');
+            const toggleBtn = document.getElementById('toggleBtn');
+            const optionsGrid = options.querySelector('.options-grid');
+            
+            if (optionsGrid.style.display === 'none') {
+                optionsGrid.style.display = 'grid';
+                toggleBtn.innerHTML = '▲ Hide Options';
+            } else {
+                optionsGrid.style.display = 'none';
+                toggleBtn.innerHTML = '▼ Show Formatting Options';
+            }
+        }
+
+        // Initialize with options visible
+        document.addEventListener('DOMContentLoaded', function() {
+            // Options are visible by default, no need to toggle
+        });
+    </script>
+</body>
+</html>
+    </div>
+
+    <script>
+        // Configuration - Change this to your desired password
+        const CORRECT_PASSWORD = "NHIC2025";
+
+        // Track authentication state
+        let isAuthenticated = false;
+
+        // DOM elements
+        const loginScreen = document.getElementById('loginScreen');
+        const mainApp = document.getElementById('mainApp');
+        const loginForm = document.getElementById('loginForm');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Handle login form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const enteredPassword = passwordInput.value;
+            
+            if (enteredPassword === CORRECT_PASSWORD) {
+                // Successful authentication
+                isAuthenticated = true;
+                showMainApp();
+            } else {
+                // Failed authentication
+                showError();
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        });
+
+        // Show main application
+        function showMainApp() {
+            loginScreen.style.display = 'none';
+            mainApp.style.display = 'block';
+            document.body.style.background = 'white';
+            errorMessage.style.display = 'none';
+        }
+
+        // Show error message
+        function showError() {
+            errorMessage.style.display = 'block';
+            passwordInput.style.borderColor = '#e74c3c';
+            
+            // Reset border color after 3 seconds
+            setTimeout(() => {
+                passwordInput.style.borderColor = '#e1e1e1';
+            }, 3000);
+        }
+
+        // Logout function
+        function logout() {
+            isAuthenticated = false;
+            loginScreen.style.display = 'flex';
+            mainApp.style.display = 'none';
+            document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            passwordInput.value = '';
+            errorMessage.style.display = 'none';
+            passwordInput.focus();
+        }
+
+        // Focus password input on page load
+        window.addEventListener('load', function() {
+            passwordInput.focus();
+        });
+
+        // Optional: Handle Enter key on password input
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loginForm.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // Security measure: Clear password from memory after successful login
+        function clearSensitiveData() {
+            if (isAuthenticated) {
+                passwordInput.value = '';
+            }
+        }
+
+        // Clear password input when switching between screens
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && isAuthenticated) {
+                clearSensitiveData();
+            }
+        });
+    </script>
+</body>
+</html>
