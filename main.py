@@ -77,7 +77,13 @@ async def scrape_lyrics(
             
             # Determine content type and find lyrics
             content_type = url_parser.get_content_type_from_url_extended(url)
-            content_div = soup.find('div', class_=content_type)
+
+            if "pnwchords" in url:
+                lyrics_header = soup.find('h2', class_='tabtitle', string='Lyrics')
+                if lyrics_header:
+                    content_div = lyrics_header.find_next_sibling('div', class_='tabcontent')
+            else:
+                content_div = soup.find('div', class_=content_type) 
             
             if content_div:
                 # Extract and clean the text
