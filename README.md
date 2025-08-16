@@ -6,6 +6,8 @@
 
 The inspiration behind the project is having to lead worship at [New Hope International Church](https://newhic.org/) on our Wednesday night discipleship classes and needing a simple way to create lyrics sheets. 
 
+The app is currently hosted on [Render](https://render.com/) and you can access it on [WorshipSheets](https://worshipsheets.onrender.com)
+
 ## Current Websites Supported:
 
 [WorshipChords](https://worshipchords.com/)
@@ -37,11 +39,17 @@ python3 -m pip install -r requirements.txt
 
 ## Usage
 
+For command line usage: 
 ```
 python3 worshipsheets.py <URL>
 ```
 
-### Examples
+To kick off the web app:
+```
+python3 main.py
+```
+
+### Command Line Examples
 
 #### Single Songs
 ```
