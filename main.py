@@ -11,13 +11,14 @@ import tempfile
 import os
 import uuid
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Import your existing modules
 import lyrics_parser
 import url_parser
 import txt_to_docx
 
-app = FastAPI(title="Lyrics Scraper", description="Clean chord symbols from worship lyrics")
+app = FastAPI(title="WorshipSheets", description="Clean chord symbols from worship lyrics")
 
 # Create directories for templates and static files
 templates = Jinja2Templates(directory="templates")
@@ -33,13 +34,24 @@ class ScrapeResponse(BaseModel):
     download_url: str = None
     processed_songs: List[str] = []
 
+# Load environment variables from .env file (for local development)
+load_dotenv()
+
 # Store temporary files (in production, use a proper file storage solution)
 temp_files = {}
 
 @app.get("/", response_class=HTMLResponse)
 async def homepage(request: Request):
-    """Serve the main webpage"""
-    return templates.TemplateResponse("index.html", {"request": request})
+    """Serve the main webpage with AdSense configuration"""
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "adsense_client_id": os.getenv("ADSENSE_CLIENT_ID", ""),
+        "adsense_slots": {
+            "login": os.getenv("ADSENSE_SLOT_LOGIN", ""),
+            "result": os.getenv("ADSENSE_SLOT_RESULT", ""),
+            "bottom": os.getenv("ADSENSE_SLOT_BOTTOM", "")
+        }
+    })
 
 @app.post("/scrape")
 async def scrape_lyrics(
