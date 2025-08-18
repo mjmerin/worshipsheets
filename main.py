@@ -11,6 +11,7 @@ import tempfile
 import os
 import uuid
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Import your existing modules
 import lyrics_parser
@@ -32,6 +33,9 @@ class ScrapeResponse(BaseModel):
     message: str
     download_url: str = None
     processed_songs: List[str] = []
+
+# Load environment variables from .env file (for local development)
+load_dotenv()
 
 # Store temporary files (in production, use a proper file storage solution)
 temp_files = {}
