@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Access</title>
+    
+    <!-- Google AdSense Script with environment variable -->
+    {% if adsense_client_id %}
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ adsense_client_id }}" crossorigin="anonymous"></script>
+    {% endif %}
+    
     <style>
         * {
             margin: 0;
@@ -156,6 +162,21 @@
             border: 1px solid #e9ecef;
         }
 
+        /* AdSense styling */
+        .ad-container {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px 0;
+        }
+
+        .ad-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         @media (max-width: 480px) {
             .login-container {
                 margin: 20px;
@@ -166,53 +187,8 @@
                 padding: 20px;
             }
         }
-    </style>
-</head>
-<body>
-    <!-- Login Screen -->
-    <div id="loginScreen" class="login-container">
-        <div class="lock-icon">🔒</div>
-        <h1>Secure Access</h1>
-        <p class="subtitle">Enter your password to continue</p>
-        
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            
-            <button type="submit" class="login-btn">Access Application</button>
-            
-            <div id="errorMessage" class="error-message">
-                Incorrect password. Please try again.
-            </div>
-        </form>
-    </div>
 
-    <!-- Main Application (Hidden by default) -->
-    <div id="mainApp" class="main-app">
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WorshipSheets</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
+        /* Styles for the WorshipSheets app */
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -246,13 +222,6 @@
 
         .form-group {
             margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #555;
         }
 
         .url-container {
@@ -468,6 +437,12 @@
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 14px;
+            text-decoration: none;
+        }
+
+        .site-tag:hover {
+            background: #5a67d8;
+            color: white;
         }
 
         .supported-sites {
@@ -476,6 +451,8 @@
             border-radius: 8px;
             margin-top: 30px;
         }
+
+        @media (max-width: 768px) {
             .container {
                 margin: 10px;
             }
@@ -491,100 +468,258 @@
             .main-content {
                 padding: 30px 20px;
             }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎵 WorshipSheets</h1>
-            <p>Making Lyric Sheets Creation Easy!</p>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="lock-icon">🔒</div>
+        <h1>Secure Access</h1>
+        <p class="subtitle">Enter your password to continue</p>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">Access Application</button>
+            
+            <div id="errorMessage" class="error-message">
+                Incorrect password. Please try again.
+            </div>
+        </form>
+
+        <!-- Ad below login form (only if AdSense is configured) -->
+        {% if adsense_client_id and adsense_slots and adsense_slots.login %}
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="{{ adsense_client_id }}"
+                 data-ad-slot="{{ adsense_slots.login }}"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
         </div>
+        {% endif %}
+    </div>
 
-        <div class="main-content">
-            <form id="lyricsForm">
-                <div class="form-group">
-                    <label>Song URLs (one per line):</label>
-                    <div id="urlInputs">
-                        <div class="url-container">
-                            <input type="url" class="url-input" name="urls" placeholder="https://worshipchords.com/amazing-grace-chords/" required>
-                        </div>
-                    </div>
-                    <button type="button" class="add-url-btn" onclick="addUrlInput()">+ Add Another URL</button>
-                </div>
-
-                <!-- Formatting Options -->
-                <div class="formatting-options" id="formattingOptions">
-                    <h3>🎨 Document Formatting Options</h3>
-                    <div class="options-grid">
-                        <div class="option-group">
-                            <label for="filename">File Name:</label>
-                            <input type="text" id="filename" name="filename" class="option-input" 
-                                   value="cleaned_lyrics" placeholder="cleaned_lyrics">
-                        </div>
-                        
-                        <div class="option-group">
-                            <label for="font_name">Font:</label>
-                            <select id="font_name" name="font_name" class="option-input">
-                                <option value="Arial" selected>Arial</option>
-                                <option value="Times New Roman">Times New Roman</option>
-                                <option value="Calibri">Calibri</option>
-                                <option value="Georgia">Georgia</option>
-                                <option value="Verdana">Verdana</option>
-                                <option value="Helvetica">Helvetica</option>
-                                <option value="Tahoma">Tahoma</option>
-                                <option value="Trebuchet MS">Trebuchet MS</option>
-                            </select>
-                        </div>
-                        
-                        <div class="option-group">
-                            <label for="font_size">Font Size (points):</label>
-                            <input type="number" id="font_size" name="font_size" class="option-input" 
-                                   value="12" min="8" max="72" step="1">
-                        </div>
-                        
-                        <div class="option-group">
-                            <label for="column_spacing">Column Spacing (inches):</label>
-                            <input type="number" id="column_spacing" name="column_spacing" class="option-input" 
-                                   value="0.5" min="0.1" max="2.0" step="0.1">
-                        </div>
-                    </div>
-                    <button type="button" class="toggle-options" onclick="toggleOptions()" id="toggleBtn">
-                        ▲ Hide Options
-                    </button>
-                </div>
-
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    Process Your Lyrics!
-                </button>
-            </form>
-
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>Processing your lyrics... This may take a moment.</p>
+    <!-- Main Application (Hidden by default) -->
+    <div id="mainApp" class="main-app">
+        <div class="container">
+            <div class="header">
+                <h1>🎵 WorshipSheets</h1>
+                <p>Making Lyric Sheets Creation Easy!</p>
             </div>
 
-            <div class="result" id="result"></div>
+            <div class="main-content">
+                <form id="lyricsForm">
+                    <div class="form-group">
+                        <label>Song URLs (one per line):</label>
+                        <div id="urlInputs">
+                            <div class="url-container">
+                                <input type="url" class="url-input" name="urls" placeholder="https://worshipchords.com/amazing-grace-chords/" required>
+                            </div>
+                        </div>
+                        <button type="button" class="add-url-btn" onclick="addUrlInput()">+ Add Another URL</button>
+                    </div>
 
-            <div class="supported-sites">
-                <h3>📱 Supported Websites</h3>
-                <div class="site-list">
-                    <!-- <span class="site-tag">WorshipChords.com</span>
-                    <span class="site-tag">PNWChords.com</span>
-                    <span class="site-tag">EssentialWorship.com</span> -->
-                    <a href="https://worshipchords.com/" target="_blank" class="site-tag">WorshipChords</a>
-                    <a href="https://pnwchords.com/" target="_blank" class="site-tag">PNWChords</a>
-                    <a href="https://essentialworship.com/" target="_blank" class="site-tag">EssentialWorship</a>
+                    <!-- Formatting Options -->
+                    <div class="formatting-options" id="formattingOptions">
+                        <h3>🎨 Document Formatting Options</h3>
+                        <div class="options-grid">
+                            <div class="option-group">
+                                <label for="filename">File Name:</label>
+                                <input type="text" id="filename" name="filename" class="option-input" 
+                                       value="cleaned_lyrics" placeholder="cleaned_lyrics">
+                            </div>
+                            
+                            <div class="option-group">
+                                <label for="font_name">Font:</label>
+                                <select id="font_name" name="font_name" class="option-input">
+                                    <option value="Arial" selected>Arial</option>
+                                    <option value="Times New Roman">Times New Roman</option>
+                                    <option value="Calibri">Calibri</option>
+                                    <option value="Georgia">Georgia</option>
+                                    <option value="Verdana">Verdana</option>
+                                    <option value="Helvetica">Helvetica</option>
+                                    <option value="Tahoma">Tahoma</option>
+                                    <option value="Trebuchet MS">Trebuchet MS</option>
+                                </select>
+                            </div>
+                            
+                            <div class="option-group">
+                                <label for="font_size">Font Size (points):</label>
+                                <input type="number" id="font_size" name="font_size" class="option-input" 
+                                       value="12" min="8" max="72" step="1">
+                            </div>
+                            
+                            <div class="option-group">
+                                <label for="column_spacing">Column Spacing (inches):</label>
+                                <input type="number" id="column_spacing" name="column_spacing" class="option-input" 
+                                       value="0.5" min="0.1" max="2.0" step="0.1">
+                            </div>
+                        </div>
+                        <button type="button" class="toggle-options" onclick="toggleOptions()" id="toggleBtn">
+                            ▲ Hide Options
+                        </button>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        Process Your Lyrics!
+                    </button>
+                </form>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Processing your lyrics... This may take a moment.</p>
                 </div>
-                <p style="margin-top: 15px; color: #6c757d; font-size: 14px;">
-                    Simply paste the URL of any song from the supported Christian music sites and we'll automatically remove all chord symbols, 
-                    leaving you with clean, formatted lyrics perfect for projection or printing. 
-                    Customize the font, size, and column spacing to match your needs.
-                </p>
+
+                <div class="result" id="result"></div>
+
+                <div class="supported-sites">
+                    <h3>📱 Supported Websites</h3>
+                    <div class="site-list">
+                        <a href="https://worshipchords.com/" target="_blank" class="site-tag">WorshipChords</a>
+                        <a href="https://pnwchords.com/" target="_blank" class="site-tag">PNWChords</a>
+                        <a href="https://essentialworship.com/" target="_blank" class="site-tag">EssentialWorship</a>
+                    </div>
+                    <p style="margin-top: 15px; color: #6c757d; font-size: 14px;">
+                        Simply paste the URL of any song from the supported Christian music sites and we'll automatically remove all chord symbols, 
+                        leaving you with clean, formatted lyrics perfect for projection or printing. 
+                        Customize the font, size, and column spacing to match your needs.
+                    </p>
+                </div>
+
+                <!-- Bottom ad (only if AdSense is configured) -->
+                {% if adsense_client_id and adsense_slots and adsense_slots.bottom %}
+                <div class="ad-container">
+                    <div class="ad-label">Advertisement</div>
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="{{ adsense_client_id }}"
+                         data-ad-slot="{{ adsense_slots.bottom }}"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
 
     <script>
+        // AdSense configuration from environment variables
+        const ADSENSE_CONFIG = {
+            clientId: "{{ adsense_client_id or '' }}",
+            slots: {{ adsense_slots | tojson if adsense_slots else '{}' }}
+        };
+
+        // Initialize AdSense only if configured
+        {% if adsense_client_id %}
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        {% endif %}
+
+        // Configuration - Change this to your desired password
+        const CORRECT_PASSWORD = "NHIC2025";
+
+        // Track authentication state
+        let isAuthenticated = false;
+
+        // DOM elements
+        const loginScreen = document.getElementById('loginScreen');
+        const mainApp = document.getElementById('mainApp');
+        const loginForm = document.getElementById('loginForm');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Handle login form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const enteredPassword = passwordInput.value;
+            
+            if (enteredPassword === CORRECT_PASSWORD) {
+                // Successful authentication
+                isAuthenticated = true;
+                showMainApp();
+                // Push ads after showing main app (only if AdSense is configured)
+                {% if adsense_client_id %}
+                setTimeout(() => {
+                    {% if adsense_slots and adsense_slots.bottom %}
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                    {% endif %}
+                }, 500);
+                {% endif %}
+            } else {
+                // Failed authentication
+                showError();
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        });
+
+        // Show main application
+        function showMainApp() {
+            loginScreen.style.display = 'none';
+            mainApp.style.display = 'block';
+            document.body.style.background = 'white';
+            errorMessage.style.display = 'none';
+        }
+
+        // Show error message
+        function showError() {
+            errorMessage.style.display = 'block';
+            passwordInput.style.borderColor = '#e74c3c';
+            
+            // Reset border color after 3 seconds
+            setTimeout(() => {
+                passwordInput.style.borderColor = '#e1e1e1';
+            }, 3000);
+        }
+
+        // Logout function
+        function logout() {
+            isAuthenticated = false;
+            loginScreen.style.display = 'flex';
+            mainApp.style.display = 'none';
+            document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            passwordInput.value = '';
+            errorMessage.style.display = 'none';
+            passwordInput.focus();
+        }
+
+        // Focus password input on page load
+        window.addEventListener('load', function() {
+            passwordInput.focus();
+            // Initialize login screen ad (only if AdSense is configured)
+            {% if adsense_client_id and adsense_slots and adsense_slots.login %}
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            {% endif %}
+        });
+
+        // Optional: Handle Enter key on password input
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loginForm.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // Security measure: Clear password from memory after successful login
+        function clearSensitiveData() {
+            if (isAuthenticated) {
+                passwordInput.value = '';
+            }
+        }
+
+        // Clear password input when switching between screens
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden && isAuthenticated) {
+                clearSensitiveData();
+            }
+        });
+
+        // WorshipSheets functionality
         let urlCount = 1;
 
         function addUrlInput() {
@@ -655,9 +790,33 @@
 
         function showResult(message, type) {
             const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = message;
+            
+            // Add ad content to the result message (only if AdSense is configured)
+            let adHtml = '';
+            {% if adsense_client_id and adsense_slots and adsense_slots.result %}
+            adHtml = `
+                <div class="ad-container" style="margin: 20px 0;">
+                    <div class="ad-label">Advertisement</div>
+                    <ins class="adsbygoogle"
+                         style="display:block; text-align:center;"
+                         data-ad-layout="in-article"
+                         data-ad-format="fluid"
+                         data-ad-client="{{ adsense_client_id }}"
+                         data-ad-slot="{{ adsense_slots.result }}"></ins>
+                </div>
+            `;
+            {% endif %}
+            
+            resultDiv.innerHTML = message + adHtml;
             resultDiv.className = `result ${type}`;
             resultDiv.style.display = 'block';
+            
+            // Initialize the ad after it's added to DOM (only if AdSense is configured)
+            {% if adsense_client_id and adsense_slots and adsense_slots.result %}
+            setTimeout(() => {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            }, 100);
+            {% endif %}
         }
 
         function toggleOptions() {
@@ -677,98 +836,6 @@
         // Initialize with options visible
         document.addEventListener('DOMContentLoaded', function() {
             // Options are visible by default, no need to toggle
-        });
-    </script>
-</body>
-</html>
-    </div>
-
-    <script>
-        // Configuration - Change this to your desired password
-        const CORRECT_PASSWORD = "NHIC2025";
-
-        // Track authentication state
-        let isAuthenticated = false;
-
-        // DOM elements
-        const loginScreen = document.getElementById('loginScreen');
-        const mainApp = document.getElementById('mainApp');
-        const loginForm = document.getElementById('loginForm');
-        const passwordInput = document.getElementById('password');
-        const errorMessage = document.getElementById('errorMessage');
-
-        // Handle login form submission
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const enteredPassword = passwordInput.value;
-            
-            if (enteredPassword === CORRECT_PASSWORD) {
-                // Successful authentication
-                isAuthenticated = true;
-                showMainApp();
-            } else {
-                // Failed authentication
-                showError();
-                passwordInput.value = '';
-                passwordInput.focus();
-            }
-        });
-
-        // Show main application
-        function showMainApp() {
-            loginScreen.style.display = 'none';
-            mainApp.style.display = 'block';
-            document.body.style.background = 'white';
-            errorMessage.style.display = 'none';
-        }
-
-        // Show error message
-        function showError() {
-            errorMessage.style.display = 'block';
-            passwordInput.style.borderColor = '#e74c3c';
-            
-            // Reset border color after 3 seconds
-            setTimeout(() => {
-                passwordInput.style.borderColor = '#e1e1e1';
-            }, 3000);
-        }
-
-        // Logout function
-        function logout() {
-            isAuthenticated = false;
-            loginScreen.style.display = 'flex';
-            mainApp.style.display = 'none';
-            document.body.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-            passwordInput.value = '';
-            errorMessage.style.display = 'none';
-            passwordInput.focus();
-        }
-
-        // Focus password input on page load
-        window.addEventListener('load', function() {
-            passwordInput.focus();
-        });
-
-        // Optional: Handle Enter key on password input
-        passwordInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                loginForm.dispatchEvent(new Event('submit'));
-            }
-        });
-
-        // Security measure: Clear password from memory after successful login
-        function clearSensitiveData() {
-            if (isAuthenticated) {
-                passwordInput.value = '';
-            }
-        }
-
-        // Clear password input when switching between screens
-        document.addEventListener('visibilitychange', function() {
-            if (document.hidden && isAuthenticated) {
-                clearSensitiveData();
-            }
         });
     </script>
 </body>

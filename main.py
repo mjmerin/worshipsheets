@@ -38,8 +38,16 @@ temp_files = {}
 
 @app.get("/", response_class=HTMLResponse)
 async def homepage(request: Request):
-    """Serve the main webpage"""
-    return templates.TemplateResponse("index.html", {"request": request})
+    """Serve the main webpage with AdSense configuration"""
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "adsense_client_id": os.getenv("ADSENSE_CLIENT_ID", ""),
+        "adsense_slots": {
+            "login": os.getenv("ADSENSE_SLOT_LOGIN", ""),
+            "result": os.getenv("ADSENSE_SLOT_RESULT", ""),
+            "bottom": os.getenv("ADSENSE_SLOT_BOTTOM", "")
+        }
+    })
 
 @app.post("/scrape")
 async def scrape_lyrics(
