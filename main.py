@@ -17,7 +17,7 @@ import lyrics_parser
 import url_parser
 import txt_to_docx
 
-app = FastAPI(title="Lyrics Scraper", description="Clean chord symbols from worship lyrics")
+app = FastAPI(title="WorshipSheets", description="Clean chord symbols from worship lyrics")
 
 # Create directories for templates and static files
 templates = Jinja2Templates(directory="templates")
