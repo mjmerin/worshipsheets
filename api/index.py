@@ -168,6 +168,3 @@ async def download_file(file_id: str):
 async def health_check():
     """Health check endpoint"""
     return {"status": "healthy", "message": "Lyrics scraper is running"}
-
-# This is required for Vercel
-handler = app
