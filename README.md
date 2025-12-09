@@ -6,7 +6,7 @@
 
 The inspiration behind the project is having to lead worship at [New Hope International Church](https://newhic.org/) on our Wednesday night discipleship classes and needing a simple way to create lyrics sheets. 
 
-The app is currently hosted on [Render](https://render.com/) and you can access it on [WorshipSheets](https://worshipsheets.onrender.com)
+The app is currently hosted on [Vercel](https://www.vercel.com/) and you can access it on [WorshipSheets](https://worshipsheets.vercel.app/)
 
 ## Current Websites Supported:
 

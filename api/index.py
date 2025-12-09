@@ -15,11 +15,21 @@ from pathlib import Path
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
+# Import version info (optional - only if you add version.py)
+try:
+    from version import __version__
+except ImportError:
+    __version__ = "1.0.0"
+
 import lyrics_parser
 import url_parser
 import txt_to_docx
 
-app = FastAPI(title="WorshipSheets", description="Clean chord symbols from worship lyrics")
+app = FastAPI(
+    title="WorshipSheets", 
+    description="Clean chord symbols from worship lyrics",
+    version=__version__
+)
 
 # Setup templates - Vercel needs absolute paths
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -167,4 +177,16 @@ async def download_file(file_id: str):
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
-    return {"status": "healthy", "message": "Lyrics scraper is running"}
+    return {
+        "status": "healthy", 
+        "message": "Lyrics scraper is running",
+        "version": __version__
+    }
+
+@app.get("/version")
+async def version_info():
+    """Get version information"""
+    return {
+        "version": __version__,
+        "app_name": "WorshipSheets"
+    }
