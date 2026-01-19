@@ -6,7 +6,7 @@
     <title>Secure Access</title>
     
     <!-- Google AdSense Script with environment variable -->
-    {% if adsense_client_id %}
+    {% if show_ads and adsense_client_id %}
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ adsense_client_id }}" crossorigin="anonymous"></script>
     {% endif %}
     
@@ -491,8 +491,8 @@
             </div>
         </form>
 
-        <!-- Ad below login form (only if AdSense is configured) -->
-        {% if adsense_client_id and adsense_slots and adsense_slots.login %}
+        <!-- Ad below login form (only if AdSense is configured and enabled) -->
+        {% if show_ads and adsense_client_id and adsense_slots and adsense_slots.login %}
         <div class="ad-container">
             <div class="ad-label">Advertisement</div>
             <ins class="adsbygoogle"
@@ -592,8 +592,8 @@
                     </p>
                 </div>
 
-                <!-- Bottom ad (only if AdSense is configured) -->
-                {% if adsense_client_id and adsense_slots and adsense_slots.bottom %}
+                <!-- Bottom ad (only if AdSense is configured and enabled) -->
+                {% if show_ads and adsense_client_id and adsense_slots and adsense_slots.bottom %}
                 <div class="ad-container">
                     <div class="ad-label">Advertisement</div>
                     <ins class="adsbygoogle"
@@ -615,8 +615,8 @@
             slots: {{ adsense_slots | tojson if adsense_slots else '{}' }}
         };
 
-        // Initialize AdSense only if configured
-        {% if adsense_client_id %}
+        <!-- Initialize AdSense only if configured and enabled -->
+        {% if show_ads and adsense_client_id %}
         (adsbygoogle = window.adsbygoogle || []).push({});
         {% endif %}
 
@@ -643,8 +643,8 @@
                 // Successful authentication
                 isAuthenticated = true;
                 showMainApp();
-                // Push ads after showing main app (only if AdSense is configured)
-                {% if adsense_client_id %}
+                // Push ads after showing main app (only if AdSense is configured and enabled)
+                {% if show_ads and adsense_client_id %}
                 setTimeout(() => {
                     {% if adsense_slots and adsense_slots.bottom %}
                     (adsbygoogle = window.adsbygoogle || []).push({});
@@ -692,8 +692,8 @@
         // Focus password input on page load
         window.addEventListener('load', function() {
             passwordInput.focus();
-            // Initialize login screen ad (only if AdSense is configured)
-            {% if adsense_client_id and adsense_slots and adsense_slots.login %}
+            // Initialize login screen ad (only if AdSense is configured and enabled)
+            {% if show_ads and adsense_client_id and adsense_slots and adsense_slots.login %}
             (adsbygoogle = window.adsbygoogle || []).push({});
             {% endif %}
         });
@@ -791,9 +791,9 @@
         function showResult(message, type) {
             const resultDiv = document.getElementById('result');
             
-            // Add ad content to the result message (only if AdSense is configured)
+            // Add ad content to the result message (only if AdSense is configured and enabled)
             let adHtml = '';
-            {% if adsense_client_id and adsense_slots and adsense_slots.result %}
+            {% if show_ads and adsense_client_id and adsense_slots and adsense_slots.result %}
             adHtml = `
                 <div class="ad-container" style="margin: 20px 0;">
                     <div class="ad-label">Advertisement</div>
