@@ -11,32 +11,13 @@ import tempfile
 import os
 import uuid
 from pathlib import Path
-from dotenv import load_dotenv
-
-# Import your existing modules
-import lyrics_parser
-import url_parser
-import txt_to_docx
+import config
 
 app = FastAPI(title="WorshipSheets", description="Clean chord symbols from worship lyrics")
 
 # Create directories for templates and static files
-templates = Jinja2Templates(directory="templates")
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-# Pydantic models for API
-class URLRequest(BaseModel):
-    urls: List[str]
-
-class ScrapeResponse(BaseModel):
-    success: bool
-    message: str
-    download_url: str = None
-    processed_songs: List[str] = []
-
+# ... (rest of imports and setup)
 # Load environment variables from .env file (for local development)
-load_dotenv()
-
 # Store temporary files (in production, use a proper file storage solution)
 temp_files = {}
 
@@ -45,14 +26,10 @@ async def homepage(request: Request):
     """Serve the main webpage with AdSense configuration"""
     return templates.TemplateResponse("index.html", {
         "request": request,
-        "show_ads": os.getenv("SHOW_ADS", "False").lower() == "true",
-        "app_password": os.getenv("APP_PASSWORD", "NHIC2025"),
-        "adsense_client_id": os.getenv("ADSENSE_CLIENT_ID", ""),
-        "adsense_slots": {
-            "login": os.getenv("ADSENSE_SLOT_LOGIN", ""),
-            "result": os.getenv("ADSENSE_SLOT_RESULT", ""),
-            "bottom": os.getenv("ADSENSE_SLOT_BOTTOM", "")
-        }
+        "show_ads": config.SHOW_ADS,
+        "app_password": config.APP_PASSWORD,
+        "adsense_client_id": config.ADSENSE_CLIENT_ID,
+        "adsense_slots": config.ADSENSE_SLOTS
     })
 
 @app.post("/scrape")
