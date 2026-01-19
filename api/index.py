@@ -48,6 +48,8 @@ async def homepage(request: Request):
     """Serve the main webpage with AdSense configuration"""
     return templates.TemplateResponse("index.html", {
         "request": request,
+        "show_ads": os.getenv("SHOW_ADS", "False").lower() == "true",
+        "app_password": os.getenv("APP_PASSWORD", "NHIC2025"),
         "adsense_client_id": os.getenv("ADSENSE_CLIENT_ID", ""),
         "adsense_slots": {
             "login": os.getenv("ADSENSE_SLOT_LOGIN", ""),
