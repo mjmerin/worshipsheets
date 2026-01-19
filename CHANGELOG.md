@@ -7,6 +7,7 @@
 
 ### Changed
    - Disable Google Adsense
+   - Move configuration into a centralized `config.py` file.
 
 ## [1.0.0] - 2024-12-09
 
