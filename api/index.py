@@ -21,6 +21,7 @@ try:
 except ImportError:
     __version__ = "1.0.1"
 
+import config
 import lyrics_parser
 import url_parser
 import txt_to_docx
@@ -48,14 +49,10 @@ async def homepage(request: Request):
     """Serve the main webpage with AdSense configuration"""
     return templates.TemplateResponse("index.html", {
         "request": request,
-        "show_ads": os.getenv("SHOW_ADS", "False").lower() == "true",
-        "app_password": os.getenv("APP_PASSWORD", "NHIC2025"),
-        "adsense_client_id": os.getenv("ADSENSE_CLIENT_ID", ""),
-        "adsense_slots": {
-            "login": os.getenv("ADSENSE_SLOT_LOGIN", ""),
-            "result": os.getenv("ADSENSE_SLOT_RESULT", ""),
-            "bottom": os.getenv("ADSENSE_SLOT_BOTTOM", "")
-        }
+        "show_ads": config.SHOW_ADS,
+        "app_password": config.APP_PASSWORD,
+        "adsense_client_id": config.ADSENSE_CLIENT_ID,
+        "adsense_slots": config.ADSENSE_SLOTS
     })
 
 @app.post("/scrape")

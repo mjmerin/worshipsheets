@@ -13,11 +13,27 @@ import uuid
 from pathlib import Path
 import config
 
+# Import your existing modules
+import lyrics_parser
+import url_parser
+import txt_to_docx
+
 app = FastAPI(title="WorshipSheets", description="Clean chord symbols from worship lyrics")
 
 # Create directories for templates and static files
-# ... (rest of imports and setup)
-# Load environment variables from .env file (for local development)
+templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Pydantic models for API
+class URLRequest(BaseModel):
+    urls: List[str]
+
+class ScrapeResponse(BaseModel):
+    success: bool
+    message: str
+    download_url: str = None
+    processed_songs: List[str] = []
+
 # Store temporary files (in production, use a proper file storage solution)
 temp_files = {}
 
