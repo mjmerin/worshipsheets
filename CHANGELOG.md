@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1] - 2025-01-19
+
+### Added
+   - Basic documentation
+
+### Changed
+   - Disable Google Adsense
+
 ## [1.0.0] - 2024-12-09
 
 ### Changed

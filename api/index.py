@@ -19,7 +19,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 try:
     from version import __version__
 except ImportError:
-    __version__ = "1.0.0"
+    __version__ = "1.0.1"
 
 import lyrics_parser
 import url_parser
