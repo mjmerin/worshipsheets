@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Access</title>
-    
+
     <!-- Google AdSense Script with environment variable -->
-    {% if adsense_client_id %}
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ adsense_client_id }}" crossorigin="anonymous"></script>
+    {% if show_ads and adsense_client_id %}
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ adsense_client_id }}"
+        crossorigin="anonymous"></script>
     {% endif %}
-    
+
     <style>
         * {
             margin: 0;
@@ -194,7 +196,7 @@
             margin: 0 auto;
             background: white;
             border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
 
@@ -208,7 +210,7 @@
         .header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .header p {
@@ -244,7 +246,8 @@
             box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
         }
 
-        .add-url-btn, .remove-url-btn {
+        .add-url-btn,
+        .remove-url-btn {
             padding: 8px 15px;
             border: none;
             border-radius: 5px;
@@ -290,7 +293,7 @@
 
         .submit-btn:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .submit-btn:disabled {
@@ -315,8 +318,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .result {
@@ -456,51 +464,48 @@
             .container {
                 margin: 10px;
             }
-            
+
             .header {
                 padding: 30px 20px;
             }
-            
+
             .header h1 {
                 font-size: 2em;
             }
-            
+
             .main-content {
                 padding: 30px 20px;
             }
         }
     </style>
 </head>
+
 <body>
     <!-- Login Screen -->
     <div id="loginScreen" class="login-container">
         <div class="lock-icon">🔒</div>
         <h1>Secure Access</h1>
         <p class="subtitle">Enter your password to continue</p>
-        
+
         <form id="loginForm">
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            
+
             <button type="submit" class="login-btn">Access Application</button>
-            
+
             <div id="errorMessage" class="error-message">
                 Incorrect password. Please try again.
             </div>
         </form>
 
-        <!-- Ad below login form (only if AdSense is configured) -->
-        {% if adsense_client_id and adsense_slots and adsense_slots.login %}
+        <!-- Ad below login form (only if AdSense is configured and enabled) -->
+        {% if show_ads and adsense_client_id and adsense_slots and adsense_slots.login %}
         <div class="ad-container">
             <div class="ad-label">Advertisement</div>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="{{ adsense_client_id }}"
-                 data-ad-slot="{{ adsense_slots.login }}"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="{{ adsense_client_id }}"
+                data-ad-slot="{{ adsense_slots.login }}" data-ad-format="auto" data-full-width-responsive="true"></ins>
         </div>
         {% endif %}
     </div>
@@ -519,7 +524,8 @@
                         <label>Song URLs (one per line):</label>
                         <div id="urlInputs">
                             <div class="url-container">
-                                <input type="url" class="url-input" name="urls" placeholder="https://worshipchords.com/amazing-grace-chords/" required>
+                                <input type="url" class="url-input" name="urls"
+                                    placeholder="https://worshipchords.com/amazing-grace-chords/" required>
                             </div>
                         </div>
                         <button type="button" class="add-url-btn" onclick="addUrlInput()">+ Add Another URL</button>
@@ -531,10 +537,10 @@
                         <div class="options-grid">
                             <div class="option-group">
                                 <label for="filename">File Name:</label>
-                                <input type="text" id="filename" name="filename" class="option-input" 
-                                       value="cleaned_lyrics" placeholder="cleaned_lyrics">
+                                <input type="text" id="filename" name="filename" class="option-input"
+                                    value="cleaned_lyrics" placeholder="cleaned_lyrics">
                             </div>
-                            
+
                             <div class="option-group">
                                 <label for="font_name">Font:</label>
                                 <select id="font_name" name="font_name" class="option-input">
@@ -548,17 +554,17 @@
                                     <option value="Trebuchet MS">Trebuchet MS</option>
                                 </select>
                             </div>
-                            
+
                             <div class="option-group">
                                 <label for="font_size">Font Size (points):</label>
-                                <input type="number" id="font_size" name="font_size" class="option-input" 
-                                       value="12" min="8" max="72" step="1">
+                                <input type="number" id="font_size" name="font_size" class="option-input" value="12"
+                                    min="8" max="72" step="1">
                             </div>
-                            
+
                             <div class="option-group">
                                 <label for="column_spacing">Column Spacing (inches):</label>
-                                <input type="number" id="column_spacing" name="column_spacing" class="option-input" 
-                                       value="0.5" min="0.1" max="2.0" step="0.1">
+                                <input type="number" id="column_spacing" name="column_spacing" class="option-input"
+                                    value="0.5" min="0.1" max="2.0" step="0.1">
                             </div>
                         </div>
                         <button type="button" class="toggle-options" onclick="toggleOptions()" id="toggleBtn">
@@ -586,22 +592,20 @@
                         <a href="https://essentialworship.com/" target="_blank" class="site-tag">EssentialWorship</a>
                     </div>
                     <p style="margin-top: 15px; color: #6c757d; font-size: 14px;">
-                        Simply paste the URL of any song from the supported Christian music sites and we'll automatically remove all chord symbols, 
-                        leaving you with clean, formatted lyrics perfect for projection or printing. 
+                        Simply paste the URL of any song from the supported Christian music sites and we'll
+                        automatically remove all chord symbols,
+                        leaving you with clean, formatted lyrics perfect for projection or printing.
                         Customize the font, size, and column spacing to match your needs.
                     </p>
                 </div>
 
-                <!-- Bottom ad (only if AdSense is configured) -->
-                {% if adsense_client_id and adsense_slots and adsense_slots.bottom %}
+                <!-- Bottom ad (only if AdSense is configured and enabled) -->
+                {% if show_ads and adsense_client_id and adsense_slots and adsense_slots.bottom %}
                 <div class="ad-container">
                     <div class="ad-label">Advertisement</div>
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="{{ adsense_client_id }}"
-                         data-ad-slot="{{ adsense_slots.bottom }}"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="{{ adsense_client_id }}"
+                        data-ad-slot="{{ adsense_slots.bottom }}" data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
                 </div>
                 {% endif %}
             </div>
@@ -615,13 +619,13 @@
             slots: {{ adsense_slots | tojson if adsense_slots else '{}' }}
         };
 
-        // Initialize AdSense only if configured
-        {% if adsense_client_id %}
+        <!-- Initialize AdSense only if configured and enabled -->
+        {% if show_ads and adsense_client_id %}
         (adsbygoogle = window.adsbygoogle || []).push({});
         {% endif %}
 
         // Configuration - Change this to your desired password
-        const CORRECT_PASSWORD = "NHIC2025";
+        const CORRECT_PASSWORD = "{{ app_password }}";
 
         // Track authentication state
         let isAuthenticated = false;
@@ -634,17 +638,17 @@
         const errorMessage = document.getElementById('errorMessage');
 
         // Handle login form submission
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', function (e) {
             e.preventDefault();
-            
+
             const enteredPassword = passwordInput.value;
-            
+
             if (enteredPassword === CORRECT_PASSWORD) {
                 // Successful authentication
                 isAuthenticated = true;
                 showMainApp();
-                // Push ads after showing main app (only if AdSense is configured)
-                {% if adsense_client_id %}
+                // Push ads after showing main app (only if AdSense is configured and enabled)
+                {% if show_ads and adsense_client_id %}
                 setTimeout(() => {
                     {% if adsense_slots and adsense_slots.bottom %}
                     (adsbygoogle = window.adsbygoogle || []).push({});
@@ -671,7 +675,7 @@
         function showError() {
             errorMessage.style.display = 'block';
             passwordInput.style.borderColor = '#e74c3c';
-            
+
             // Reset border color after 3 seconds
             setTimeout(() => {
                 passwordInput.style.borderColor = '#e1e1e1';
@@ -690,16 +694,16 @@
         }
 
         // Focus password input on page load
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             passwordInput.focus();
-            // Initialize login screen ad (only if AdSense is configured)
-            {% if adsense_client_id and adsense_slots and adsense_slots.login %}
+            // Initialize login screen ad (only if AdSense is configured and enabled)
+            {% if show_ads and adsense_client_id and adsense_slots and adsense_slots.login %}
             (adsbygoogle = window.adsbygoogle || []).push({});
             {% endif %}
         });
 
         // Optional: Handle Enter key on password input
-        passwordInput.addEventListener('keypress', function(e) {
+        passwordInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 loginForm.dispatchEvent(new Event('submit'));
             }
@@ -713,7 +717,7 @@
         }
 
         // Clear password input when switching between screens
-        document.addEventListener('visibilitychange', function() {
+        document.addEventListener('visibilitychange', function () {
             if (document.hidden && isAuthenticated) {
                 clearSensitiveData();
             }
@@ -744,12 +748,12 @@
             urlCount--;
         }
 
-        document.getElementById('lyricsForm').addEventListener('submit', async function(e) {
+        document.getElementById('lyricsForm').addEventListener('submit', async function (e) {
             e.preventDefault();
-            
+
             const formData = new FormData(this);
             const urls = formData.getAll('urls').filter(url => url.trim() !== '');
-            
+
             if (urls.length === 0) {
                 showResult('Please enter at least one URL', 'error');
                 return;
@@ -773,7 +777,7 @@
                     if (data.processed_songs && data.processed_songs.length > 0) {
                         message += `<br><br><strong>Processed songs:</strong><br>• ${data.processed_songs.join('<br>• ')}`;
                     }
-                    
+
                     const downloadHtml = `<a href="${data.download_url}" class="download-link" download>📥 Download Lyrics</a>`;
                     showResult(message + '<br><br>' + downloadHtml, 'success');
                 } else {
@@ -790,10 +794,10 @@
 
         function showResult(message, type) {
             const resultDiv = document.getElementById('result');
-            
-            // Add ad content to the result message (only if AdSense is configured)
+
+            // Add ad content to the result message (only if AdSense is configured and enabled)
             let adHtml = '';
-            {% if adsense_client_id and adsense_slots and adsense_slots.result %}
+            {% if show_ads and adsense_client_id and adsense_slots and adsense_slots.result %}
             adHtml = `
                 <div class="ad-container" style="margin: 20px 0;">
                     <div class="ad-label">Advertisement</div>
@@ -806,11 +810,11 @@
                 </div>
             `;
             {% endif %}
-            
+
             resultDiv.innerHTML = message + adHtml;
             resultDiv.className = `result ${type}`;
             resultDiv.style.display = 'block';
-            
+
             // Initialize the ad after it's added to DOM (only if AdSense is configured)
             {% if adsense_client_id and adsense_slots and adsense_slots.result %}
             setTimeout(() => {
@@ -823,7 +827,7 @@
             const options = document.getElementById('formattingOptions');
             const toggleBtn = document.getElementById('toggleBtn');
             const optionsGrid = options.querySelector('.options-grid');
-            
+
             if (optionsGrid.style.display === 'none') {
                 optionsGrid.style.display = 'grid';
                 toggleBtn.innerHTML = '▲ Hide Options';
@@ -834,9 +838,10 @@
         }
 
         // Initialize with options visible
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Options are visible by default, no need to toggle
         });
     </script>
 </body>
+
 </html>

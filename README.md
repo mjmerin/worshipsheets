@@ -22,6 +22,16 @@ The app is currently hosted on [Vercel](https://www.vercel.com/) and you can acc
 
 As each website shows the lyrics/tabs differently, formatting still needs to be customized per website. 
 
+## How it Works
+
+`WorshipSheets` follows a simple four-step process:
+1. **Scrape**: Fetches the raw content from the provided URLs.
+2. **Parse**: Identifies the song title and specific lyric sections.
+3. **Clean**: Uses intelligent algorithms to strip out chord symbols while preserving lyrics and section headers.
+4. **Export**: Generates a professional, two-column Word document.
+
+For a more detailed technical breakdown, see [HOW_IT_WORKS.md](HOW_IT_WORKS.md).
+
 ## Environment Setup
 
 You will need to create a python virtual environment.
