@@ -25,6 +25,10 @@ import config
 import lyrics_parser
 import url_parser
 import txt_to_docx
+try:
+    import txt_to_pdf
+except ImportError:
+    txt_to_pdf = None
 
 app = FastAPI(
     title="WorshipSheets", 
@@ -61,7 +65,8 @@ async def scrape_lyrics(
     filename: str = Form("cleaned_lyrics"),
     font_name: str = Form("Arial"),
     font_size: int = Form(12),
-    column_spacing: float = Form(0.5)
+    column_spacing: float = Form(0.5),
+    output_format: str = Form("docx")
 ):
     """Process lyrics from multiple URLs and create a downloadable document"""
     if not urls or all(not url.strip() for url in urls):
@@ -121,12 +126,33 @@ async def scrape_lyrics(
         safe_filename = "".join(c for c in filename if c.isalnum() or c in (' ', '-', '_')).rstrip()
         if not safe_filename:
             safe_filename = "cleaned_lyrics"
+
+        output_format = output_format.lower()
+        file_config = {
+            "docx": {
+                "extension": "docx",
+                "media_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "generator": txt_to_docx.create_continuous_two_column_docx,
+            },
+            "pdf": {
+                "extension": "pdf",
+                "media_type": "application/pdf",
+                "generator": txt_to_pdf.create_continuous_two_column_pdf if txt_to_pdf else None,
+            },
+        }
+
+        if output_format not in file_config:
+            raise HTTPException(status_code=400, detail="Output format must be either docx or pdf")
+
+        if output_format == "pdf" and not txt_to_pdf:
+            raise HTTPException(status_code=500, detail="PDF export is unavailable because the PDF dependency is not installed")
         
         file_id = str(uuid.uuid4())
-        temp_filename = f"{safe_filename}_{file_id}.docx"
+        selected_format = file_config[output_format]
+        temp_filename = f"{safe_filename}_{file_id}.{selected_format['extension']}"
         temp_path = os.path.join(tempfile.gettempdir(), temp_filename)
         
-        txt_to_docx.create_continuous_two_column_docx(
+        selected_format["generator"](
             *text_list,
             output_filename=temp_path,
             font_name=font_name,
@@ -136,7 +162,8 @@ async def scrape_lyrics(
         
         temp_files[file_id] = {
             'path': temp_path,
-            'filename': f"{safe_filename}.docx"
+            'filename': f"{safe_filename}.{selected_format['extension']}",
+            'media_type': selected_format['media_type']
         }
         
         message = f"Successfully processed {len(processed_songs)} song(s)"
@@ -152,6 +179,8 @@ async def scrape_lyrics(
             "processed_songs": processed_songs
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to create document: {str(e)}")
 
@@ -170,7 +199,7 @@ async def download_file(file_id: str):
     return FileResponse(
         path=file_path,
         filename=file_info['filename'],
-        media_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        media_type=file_info['media_type']
     )
 
 @app.get("/health")
