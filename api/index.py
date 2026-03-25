@@ -179,6 +179,8 @@ async def scrape_lyrics(
             "processed_songs": processed_songs
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to create document: {str(e)}")
 
