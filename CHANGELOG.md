@@ -2,6 +2,14 @@
 
 ## [1.0.2] - 2026-03-25
 
+### Added
+   - PDF export option for generated lyric sheets
+
+### Changed
+   - Allow users to choose between `.docx` and `.pdf` output formats in the web UI
+   - Update download handling to return the correct filename and content type for each export format
+   - Add ReportLab as a dependency for PDF generation
+
 ## [1.0.1] - 2026-01-19
 
 ### Added
